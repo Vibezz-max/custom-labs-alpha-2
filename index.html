@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUSTOM LABS | Premium Custom Products</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Morphing Header/Hero -->
+    <header class="morph-header" id="morphHeader">
+        <!-- Navigation Bar -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <span>CUSTOM</span>
+                    <span class="logo-orange">LABS</span>
+                </div>
+                
+                <div class="nav-links">
+                    <a href="#home" class="nav-link active">HOME</a>
+                    <a href="#products" class="nav-link">PRODUCTS</a>
+                    <a href="#process" class="nav-link">PROCESS</a>
+                    <a href="#about" class="nav-link">ABOUT</a>
+                    <a href="#contact" class="nav-link">CONTACT</a>
+                </div>
+                
+                <!-- AUTH SECTION -->
+                <div class="nav-auth">
+                    <button class="login-btn" id="loginBtn">
+                        <i class="fas fa-user"></i>
+                        <span>LOGIN</span>
+                    </button>
+                    
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Hero Content -->
+        <div class="hero-container" id="heroContainer">
+            <div class="hero-content">
+                <!-- Brand Name -->
+                <div class="brand-name">
+                    <span class="brand-text">CUSTOM</span>
+                    <span class="brand-orange">LABS</span>
+                </div>
+                
+                <!-- Main Headline -->
+                <h1 class="hero-title">
+                    <span class="title-line">CREATE YOUR</span>
+                    <span class="title-line highlight">UNIQUE VISION</span>
+                </h1>
+                
+                <!-- Subtitle -->
+                <p class="hero-subtitle">Premium custom products crafted to your exact specifications</p>
+                
+                <!-- CTA Button -->
+                <button class="cta-button" id="customizeBtn">
+                    <span>START CREATING</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator" id="scrollIndicator">
+                <div class="scroll-line"></div>
+                <span>SCROLL TO EXPLORE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-modal-content">
+            <button class="close-modal" id="closeAuthModal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">LOGIN</button>
+                <button class="auth-tab" data-tab="signup">SIGN UP</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                
+                <button type="submit" class="auth-submit-btn">
+                    <span>LOGIN</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+                
+                <button type="button" class="google-auth-btn" id="googleLoginBtn">
+                    <i class="fab fa-google"></i>
+                    <span>Continue with Google</span>
+                </button>
+                
+                <div class="auth-links">
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+            </form>
+            
+            <!-- Signup Form -->
+            <form class="auth-form" id="signupForm">
+                <div class="form-group">
+                    <input type="text" id="signupName" placeholder="Full Name" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" id="signupEmail" placeholder="Email" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="signupPassword" placeholder="Password" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="signupConfirmPassword" placeholder="Confirm Password" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                
+                <button type="submit" class="auth-submit-btn">
+                    <span>CREATE ACCOUNT</span>
+                    <i class="fas fa-user-plus"></i>
+                </button>
+                
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+                
+                <button type="button" class="google-auth-btn" id="googleSignupBtn">
+                    <i class="fab fa-google"></i>
+                    <span>Sign up with Google</span>
+                </button>
+                
+                <div class="terms">
+                    <p>By signing up, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
+                </div>
+            </form>
+            
+            <!-- Auth Status Messages -->
+            <div class="auth-status" id="authStatus"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Products Section -->
+        <section id="products" class="section">
+            <div class="container">
+                <h2 class="section-title">OUR <span class="highlight">PRODUCTS</span></h2>
+                <p class="section-subtitle">Customize anything to match your style</p>
+                
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="product-info">
+                            <h3>CUSTOM APPAREL</h3>
+                            <p>Design your own clothing with custom prints and fabrics.</p>
+                            <button class="product-btn">CUSTOMIZE</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-mug-hot"></i>
+                        </div>
+                        <div class="product-info">
+                            <h3>PERSONALIZED MUGS</h3>
+                            <p>Create mugs with your photos, text, or custom designs.</p>
+                            <button class="product-btn">CUSTOMIZE</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-watch"></i>
+                        </div>
+                        <div class="product-info">
+                            <h3>CUSTOM WATCHES</h3>
+                            <p>Design a timepiece that reflects your personality.</p>
+                            <button class="product-btn">CUSTOMIZE</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="product-info">
+                            <h3>DESIGNER BAGS</h3>
+                            <p>Craft your ideal bag with custom materials and colors.</p>
+                            <button class="product-btn">CUSTOMIZE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Process Section -->
+        <section id="process" class="section">
+            <div class="container">
+                <h2 class="section-title">HOW IT <span class="highlight">WORKS</span></h2>
+                <p class="section-subtitle">Three simple steps to your custom creation</p>
+                
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">01</div>
+                        <h3>DESIGN</h3>
+                        <p>Share your vision with our design team or use our online tool.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">02</div>
+                        <h3>CRAFT</h3>
+                        <p>Our artisans handcraft your product with premium materials.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">03</div>
+                        <h3>DELIVER</h3>
+                        <p>Receive your custom creation, perfectly packaged.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title">ABOUT <span class="highlight">CUSTOM LABS</span></h2>
+                <p class="section-subtitle">We believe in products as unique as you are</p>
+                
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Custom Labs was founded on the principle that everyone deserves products that reflect their personal style and needs. We combine traditional craftsmanship with modern technology to create truly unique items.</p>
+                        <p>Our team of designers and artisans work closely with each client to ensure every detail matches their vision. From initial concept to final delivery, we're committed to excellence.</p>
+                        <a href="#contact" class="about-btn">GET IN TOUCH</a>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">HAPPY CLIENTS</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">SATISFACTION RATE</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">SUPPORT</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title">READY TO <span class="highlight">CREATE?</span></h2>
+                <p class="section-subtitle">Start your custom product journey today</p>
+                
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>GET IN TOUCH</h3>
+                        <p>Have questions about customization? We're here to help!</p>
+                        <div class="contact-details">
+                            <div class="detail">
+                                <i class="fas fa-envelope"></i>
+                                <span>hello@customlabs.com</span>
+                            </div>
+                            <div class="detail">
+                                <i class="fas fa-phone"></i>
+                                <span>+1 (555) 123-4567</span>
+                            </div>
+                            <div class="detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>123 Design Street, Creative City</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Tell us about your project" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <span>SEND MESSAGE</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span>CUSTOM</span>
+                    <span>LABS</span>
+                </div>
+                <p class="footer-tagline">Creating uniqueness, one product at a time.</p>
+                
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                
+                <p class="footer-copyright">© 2023 CUSTOM LABS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Load Scripts in ORDER -->
+    <script src="firebase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="firebase-app.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
